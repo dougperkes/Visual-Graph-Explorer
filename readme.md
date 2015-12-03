@@ -1,6 +1,7 @@
 #Visual Graph Explorer
 This project is a sample visual explorer for the [Microsoft Graph API](https://graph.microsoft.io/). At this point the project only uses the published v1.0 endpoints and supports read-only scenarios.  
 
+![](http://i.imgur.com/7uJ73WG.png)
 ##Upcoming features 
 Demonstrate full Create, Read, Update and Delete operations using the Graph API.
 
