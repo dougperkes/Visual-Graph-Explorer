@@ -23,17 +23,31 @@ var app = angular.module('graphApp', ['ngRoute', 'AdalAngular', 'angularMoment']
             // Map the location of a request to an API to a the identifier of the associated resource
             'https://graph.microsoft.com': 'https://graph.microsoft.com'
         };
-        adalProvider.init(
-            {
-                instance: 'https://login.microsoftonline.com/',
-                //tenant: 'perkesdemo.onmicrosoft.com',
-                clientId: '223b5936-e31e-4036-a813-af8e976e7e87',
-                extraQueryParameter: 'nux=1',
-                endpoints: endpoints,
-            },
-            $httpProvider
-            );
 
+        var PRODUCTION_URL = "visualgraphexplorer\.azurewebsites\.net";
+        if (RegExp(PRODUCTION_URL, 'i').test(window.location.host)) {
+            adalProvider.init(
+                {
+                    instance: 'https://login.microsoftonline.com/',
+                    //tenant: 'perkesdemo.onmicrosoft.com',
+                    clientId: '78d5a9a4-c418-4199-ac9b-a7e66a61ad91',
+                    extraQueryParameter: 'nux=1',
+                    endpoints: endpoints,
+                },
+                $httpProvider
+                );
+        } else {
+            adalProvider.init(
+                {
+                    instance: 'https://login.microsoftonline.com/',
+                    //tenant: 'perkesdemo.onmicrosoft.com',
+                    clientId: '223b5936-e31e-4036-a813-af8e976e7e87',
+                    extraQueryParameter: 'nux=1',
+                    endpoints: endpoints,
+                },
+                $httpProvider
+                );
+        }
     }]);
 
 app.factory('graphHttpInterceptor', ['$q', '$rootScope', '$injector',
