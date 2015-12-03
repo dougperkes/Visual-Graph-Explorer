@@ -26,7 +26,7 @@ var app = angular.module('graphApp', ['ngRoute', 'AdalAngular', 'angularMoment']
         adalProvider.init(
             {
                 instance: 'https://login.microsoftonline.com/',
-                tenant: 'perkesdemo.onmicrosoft.com',
+                //tenant: 'perkesdemo.onmicrosoft.com',
                 clientId: '223b5936-e31e-4036-a813-af8e976e7e87',
                 extraQueryParameter: 'nux=1',
                 endpoints: endpoints,
