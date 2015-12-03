@@ -1,0 +1,64 @@
+.circular-container {
+	float:left;
+	margin:8px;
+	width: 108px;
+	height: 108px;
+	background-color: #fff;
+	border: 2px solid #ff5500;
+	border-radius: 54px;
+	-webkit-border-radius: 54px;
+	-moz-border-radius: 54px;
+	padding:2px;
+}
+.circular {
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+}
+ul.photoDirectory {
+	padding:0;
+	list-style-type: none;
+}
+.photoDirectory li .circular-container, .small-photo .circular-container {
+	margin: 0 15px 0 0;
+	width:48px;
+	height:48px;
+	border-radius: 24px;
+	-webkit-border-radius: 24px;
+	-moz-border-radius: 24px;
+}
+.photoDirectory li .circular, .small-photo .circular {
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+}
+
+.photoDirectory li {
+  padding: 10px;
+  overflow: auto;
+}
+ 
+.photoDirectory li:hover {
+  background: #eee;
+  cursor: pointer;
+}
+
+.panel-heading h3:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e014";    
+    float: right; 
+    color: grey; 
+}
+	
+.userDetails {
+	-ms-transform: scale(.9,.9); /* IE 9 */
+    -webkit-transform: scale(.9,.9); /* Safari */
+    transform: scale(.9,.9); /* Standard syntax */
+}

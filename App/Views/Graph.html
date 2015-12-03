@@ -1,0 +1,22 @@
+<div ng-init="populate()" class="col-md-8">
+	<p class="error">{{error}}</p>
+	<p>{{loadingMessage}}</p>
+	<div ng-show="userData != null">
+		<graph-person person="userData"></graph-person>
+	</div>
+</div>
+<div class="col-md-4">
+	<h3>Log of REST calls (newest on top)</h3>
+	<ul class="list-group">
+		<li class="list-group-item" ng-repeat="req in requestLog">
+			<div>
+				<span class="label" ng-class="{'label-success': req.status === 200, 'label-danger': req.status !== 200}">
+				{{req.status}} - {{req.statusText}}
+			</span> <span style="float:right" class="label label-default" am-time-ago="{{req.completedOn}}"></span>
+			</div>
+			<div>
+				<span class="label label-info">{{req.config.method}}</span> {{req.config.url}}
+			</div>
+		</li>
+	</ul>
+</div>

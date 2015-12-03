@@ -1,0 +1,138 @@
+<div>
+	<graph-person-photo person="personData.userPrincipalName"></graph-person-photo>
+	<h2>{{personData.displayName}}</h2>
+	<summary>{{personData.jobTitle}} - {{personData.mail}} - {{personData.officeLocation}}</summary>
+
+	<a href="" ng-click="showManager()">Manager</a> |
+	<a href="" ng-click="showDirectReports()">Direct Reports</a> |
+	<a href="" ng-click="showMessages()">Messages</a> |
+	<a href="" ng-click="showDrive()">Files</a> |
+	<a href="" ng-click="showContacts()">Contacts</a> |
+	<a href="" ng-click="showEvents()">Events</a> |
+	<a href="" ng-click="showGroups()">Groups</a>
+
+
+	<div class="userDetails">
+		<div class="panel panel-info" ng-show="(personData.manager) != null">
+			<div class="panel-heading">
+				<h3 class="panel-title" ng-click="personData.manager = null">Manager</h3>
+			</div>
+			<div class="panel-body">
+				<graph-person-photo person="personData.manager.userPrincipalName"></graph-person-photo>
+				<h3><a href="/#/Graph/{{personData.manager.userPrincipalName}}">{{personData.manager.displayName}}</a></h3>
+				<summary>{{personData.manager.jobTitle}} - {{personData.manager.mail}} - {{personData.manager.officeLocation}}</summary>
+			</div>
+		</div>
+		<div class="panel panel-info" ng-show="directReports != null">
+			<div class="panel-heading">
+				<h3 class="panel-title" ng-click="directReports = null">Direct Reports</h3>
+			</div>
+
+			<div class="panel-body">
+				<h4 ng-if="directReports.length <= 0">No direct reports</h4>
+				<ul class="photoDirectory">
+					<li ng-repeat="directReport in directReports">
+						<graph-person-photo person="directReport.userPrincipalName"></graph-person-photo>
+						<h5><a href="/#/Graph/{{directReport.userPrincipalName}}">{{directReport.displayName}} - {{directReport.jobTitle}}</a></h5>
+						<p>{{directReport.mail}} - {{directReport.officeLocation}}</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="panel  panel-info" ng-show="messages != null">
+			<div class="panel-heading">
+				<h3 class="panel-title" ng-click="messages = null">Messages</h3>
+			</div>
+			<div class="panel-body">
+
+				<ul>
+					<li ng-repeat="message in messages">
+						{{message.subject}} - {{message.receivedDateTime}}
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="panel panel-info" ng-show="drive != null">
+			<div class="panel-heading">
+				<h3 class="panel-title" ng-click="drive = null">Files</h3>
+			</div>
+			<div class="panel-body">
+				<table ng-if="drive.length > 0" class="table-condensed table-bordered table-hover">
+					<tr>
+						<td>File/Folder</td>
+						<td>Created By</td>
+						<td>Modified By</td>
+					</tr>
+					<tr ng-repeat="child in drive">
+						<td><a href="{{child.webUrl}}?web=1" target="_blank">{{child.name}}</a> <span class="badge" ng-if="child.folder != null">{{child.folder.childCount}} items</span></td>
+						<td class="small-photo">
+							<graph-person-photo person="child.createdBy.user.id"></graph-person-photo><a href="/#/Graph/{{child.createdBy.user.userPrincipalName}}">{{child.createdBy.user.displayName}}</a></td>
+						<td class="small-photo">
+							<graph-person-photo person="child.lastModifiedBy.user.id"></graph-person-photo><a href="/#/Graph/{{child.lastModifiedBy.user.userPrincipalName}}">{{child.lastModifiedBy.user.displayName}}</a></td>
+					</tr>
+				</table>
+				<h5 ng-if="drive.length == 0">No OneDrive items found. Typically because the currently logged in user 
+					does not have permissions to this person's OneDrive files or this person has not shared any items
+					with the logged on user.</h5>
+			</div>
+		</div>
+		<div class="panel panel-info" ng-show="contacts != null">
+			<div class="panel-heading">
+				<h3 class="panel-title" ng-click="contacts = null">Contacts</h3>
+			</div>
+			<div class="panel-body">
+
+				<ul>
+					<li ng-repeat="contact in contacts">
+						{{contact.displayName}}<span ng-if="contact.emailAddresses.length > 0">
+						- {{contact.emailAddresses[0].address}}
+					</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="panel panel-info" ng-show="events != null">
+			<div class="panel-heading">
+				<h3 class="panel-title" ng-click="events = null">Events</h3>
+			</div>
+			<div class="panel-body">
+
+				<ul>
+					<li ng-repeat="event in events">
+						<h4>{{event.subject}}</h4>
+						<summary>Start: {{event.start.dateTime}} ({{event.start.timeZone}})
+							<br /> End: {{event.end.dateTime}} ({{event.end.timeZone}})
+							<br ng-if="event.bodyPreview != null" /> {{event.bodyPreview}}
+						</summary>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="panel panel-info" ng-show="groups != null">
+			<div class="panel-heading">
+				<h3 class="panel-title" ng-click="groups = null">Groups</h3>
+			</div>
+			<div class="panel-body">
+
+				<ul>
+					<li ng-repeat="group in groups">
+						{{group.displayName}} <span ng-if="group.mail != null">
+						({{group.mail}})
+					</span>
+						<button class="btn btn-default btn-xs" ng-show="group.members == null" ng-click="showGroupMembers(group)">Show Members</button>
+						<button class="btn btn-default btn-xs" ng-hide="group.members == null" ng-click="group.members = null">Hide Members</button>
+						<ul class="photoDirectory" ng-if="group.members">
+							<li ng-repeat="person in group.members">
+								<graph-person-photo person="person.userPrincipalName"></graph-person-photo>
+								<h5 ng-if="person.userPrincipalName != null"><a href="/#/Graph/{{person.userPrincipalName}}">{{person.displayName}} - {{person.jobTitle}}</a></h5>
+								<h5 ng-if="person.userPrincipalName == null">{{person.displayName}} (External User)</h5>
+								<p>{{person.mail}} - {{person.officeLocation}}</p>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
