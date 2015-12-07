@@ -12,10 +12,26 @@
 			<div>
 				<span class="label" ng-class="{'label-success': req.status === 200, 'label-danger': req.status !== 200}">
 				{{req.status}} - {{req.statusText}}
-			</span> <span style="float:right" class="label label-default" am-time-ago="{{req.completedOn}}"></span>
+				</span>
+
+				<div style="float:right;margin-left:10px">
+					<span class="label label-default" am-time-ago="{{req.completedOn}}"></span>
+				</div>
 			</div>
 			<div>
-				<span class="label label-info">{{req.config.method}}</span> {{req.config.url}}
+				<button type="button" class="btn btn-default btn-xs" ng-click="req.showdata=!req.showdata" aria-label="Show Response" title="Show Response"
+				ng-hide="req.showdata">
+					<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+				</button>
+				<button type="button" class="btn btn-default btn-xs" ng-click="req.showdata=!req.showdata" aria-label="Hide Resonse" title="Hide Response"
+				ng-show="req.showdata">
+					<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+				</button>
+				<span class="label label-info">{{req.config.method}}</span>
+				{{req.config.url}}
+			</div>
+			<div ng-show="req.showdata">
+				<pre>{{req.data | json}}</pre>
 			</div>
 		</li>
 	</ul>
