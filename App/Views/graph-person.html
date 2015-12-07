@@ -1,5 +1,5 @@
 <div>
-	<graph-person-photo person="personData.userPrincipalName"></graph-person-photo>
+	<graph-person-photo person="personData.id"></graph-person-photo>
 	<h2>{{personData.displayName}}</h2>
 	<summary>{{personData.jobTitle}} - {{personData.mail}} - {{personData.officeLocation}}</summary>
 
@@ -18,7 +18,7 @@
 				<h3 class="panel-title" ng-click="personData.manager = null">Manager</h3>
 			</div>
 			<div class="panel-body">
-				<graph-person-photo person="personData.manager.userPrincipalName"></graph-person-photo>
+				<graph-person-photo person="personData.manager.id"></graph-person-photo>
 				<h3><a href="/#/Graph/{{personData.manager.userPrincipalName}}">{{personData.manager.displayName}}</a></h3>
 				<summary>{{personData.manager.jobTitle}} - {{personData.manager.mail}} - {{personData.manager.officeLocation}}</summary>
 			</div>
@@ -32,7 +32,7 @@
 				<h4 ng-if="directReports.length <= 0">No direct reports</h4>
 				<ul class="photoDirectory">
 					<li ng-repeat="directReport in directReports">
-						<graph-person-photo person="directReport.userPrincipalName"></graph-person-photo>
+						<graph-person-photo person="directReport.id"></graph-person-photo>
 						<h5><a href="/#/Graph/{{directReport.userPrincipalName}}">{{directReport.displayName}} - {{directReport.jobTitle}}</a></h5>
 						<p>{{directReport.mail}} - {{directReport.officeLocation}}</p>
 					</li>
@@ -124,7 +124,7 @@
 						<button class="btn btn-default btn-xs" ng-hide="group.members == null" ng-click="group.members = null">Hide Members</button>
 						<ul class="photoDirectory" ng-if="group.members">
 							<li ng-repeat="person in group.members">
-								<graph-person-photo person="person.userPrincipalName"></graph-person-photo>
+								<graph-person-photo person="person.id"></graph-person-photo>
 								<h5 ng-if="person.userPrincipalName != null"><a href="/#/Graph/{{person.userPrincipalName}}">{{person.displayName}} - {{person.jobTitle}}</a></h5>
 								<h5 ng-if="person.userPrincipalName == null">{{person.displayName}} (External User)</h5>
 								<p>{{person.mail}} - {{person.officeLocation}}</p>
