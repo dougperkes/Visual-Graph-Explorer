@@ -16,23 +16,34 @@
 
 				<div style="float:right;margin-left:10px">
 					<span class="label label-default" am-time-ago="{{req.completedOn}}"></span>
+					<button type="button" class="btn btn-default btn-xs" ng-click="req.showrequestdata=!req.showrequestdata" aria-label="Show Request"
+					title="Show Response" ng-show="req.config.data != null && (req.showrequestdata == null || req.showrequestdata === false)">
+						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-xs" ng-click="req.showrequestdata=!req.showrequestdata" aria-label="Hide Request"
+					title="Hide Response" ng-show="req.showrequestdata">
+						<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+					</button>
 				</div>
-			</div>
-			<div>
-				<button type="button" class="btn btn-default btn-xs" ng-click="req.showdata=!req.showdata" aria-label="Show Response" title="Show Response"
-				ng-hide="req.showdata">
-					<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-				</button>
-				<button type="button" class="btn btn-default btn-xs" ng-click="req.showdata=!req.showdata" aria-label="Hide Resonse" title="Hide Response"
-				ng-show="req.showdata">
-					<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
-				</button>
-				<span class="label label-info">{{req.config.method}}</span>
-				{{req.config.url}}
-			</div>
-			<div ng-show="req.showdata">
-				<pre>{{req.data | json}}</pre>
-			</div>
+				<div>
+					<button type="button" class="btn btn-default btn-xs" ng-click="req.showresponsedata=!req.showresponsedata" aria-label="Show Response"
+					title="Show Response" ng-hide="req.showresponsedata">
+						<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+					</button>
+					<button type="button" class="btn btn-default btn-xs" ng-click="req.showresponsedata=!req.showresponsedata" aria-label="Hide Response"
+					title="Hide Response" ng-show="req.showresponsedata">
+						<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+					</button>
+					<span class="label label-info">{{req.config.method}}</span> <span style="word-wrap: break-word;">{{req.config.url}}</span>
+				</div>
+				<div ng-show="req.showrequestdata">
+					<h4>Request data</h4>
+					<pre>{{req.config.data | json}}</pre>
+				</div>
+				<div ng-show="req.showresponsedata">
+					<h4>Response data</h4>
+					<pre>{{req.data | json}}</pre>
+				</div>
 		</li>
 	</ul>
-</div>
+	</div>
