@@ -112,6 +112,47 @@ angular.module('graphApp')
                                                 });
                                 };
 
+                                $scope.createFolder = function () {
+                                        var folderName = $scope.newFolderName;
+                                        if (folderName) {
+                                                var url = "https://graph.microsoft.com/v1.0/users/" + $scope.upn + "/drive/root/children";
+                                                var data = { "name": folderName, "folder": {} };
+                                                $http.post(url, data)
+                                                        .then(function successCallback(response) {
+                                                                //let's just refresh the drive data
+                                                                $scope.showDrive();
+                                                                $scope.newFolderName = "";
+                                                        }, function errorCallback(response) {
+                                                                $scope.error = JSON.stringify(response);
+                                                                $scope.loadingMessage = "";
+                                                        })
+                                        }
+                                }
+
+                                $scope.deleteOneDriveItem = function (itemId) {
+                                        var url = "https://graph.microsoft.com/v1.0/users/" + $scope.upn + "/drive/items/" + itemId
+                                        $http.delete(url)
+                                                .then(function successCallback(response) {
+                                                        $scope.showDrive();
+                                                }, function errorCallback(response) {
+                                                        $scope.error = JSON.stringify(response);
+                                                        $scope.loadingMessage = ""
+                                                })
+                                }
+
+                                $scope.createSharingLink = function (driveItem) {
+                                        var url = "https://graph.microsoft.com/v1.0/users/" + $scope.upn + "/drive/items/" + driveItem.id +
+                                                "/microsoft.graph.createLink";
+                                        var data = { "type": "edit", "scope": "organization" };
+                                        $http.post(url, data)
+                                                .then(function successCallback(response) {
+                                                        var linkData = response.data;
+                                                        driveItem.sharingLink = linkData.SharingLink;
+                                                }, function errorCallback(response) {
+
+                                                });
+                                }
+
                                 $scope.showGroupMembers = function (group) {
                                         var url = "https://graph.microsoft.com/v1.0/groups/" + group.id + "/members";
                                         $http.get(url)
@@ -121,6 +162,36 @@ angular.module('graphApp')
                                                         $scope.error = JSON.stringify(response);
                                                         $scope.loadingMessage = "";
                                                 })
+                                }
+
+                                $scope.sendSampleMail = function () {
+                                        $scope.sampleMailSent = false;
+                                        var url = "https://graph.microsoft.com/v1.0/users/" + $scope.upn + "/microsoft.graph.sendmail"
+                                        var data = {
+                                                "Message": {
+                                                        "Subject": "Visual Graph Explorer sample mail",
+                                                        "Body": {
+                                                                "ContentType": "Html",
+                                                                "Content": "<html><body>Sample mail from <b>Visual Graph Explorer</b></body></html>"
+                                                        },
+                                                        "ToRecipients": [
+                                                                {
+                                                                        "EmailAddress": {
+                                                                                "Name": $scope.sampleEmailAddress,
+                                                                                "Address": $scope.sampleEmailAddress
+                                                                        }
+                                                                }
+                                                        ]
+                                                },
+                                                "SaveToSentItems": true
+                                        };
+                                        $http.post(url, data)
+                                        .then(function successCallback(response) {
+                                                $scope.sampleMailSent = true;
+                                        }, function errorCallback(response) {
+                                                $scope.sampleMailSent = false;
+                                        })
+                                        
                                 }
 
                         },

@@ -44,7 +44,12 @@
 				<h3 class="panel-title" ng-click="messages = null">Messages</h3>
 			</div>
 			<div class="panel-body">
-
+				<div class="form-group form-inline">
+					<form name="sampleEmailForm">
+					<input type="email" name="sampleEmailAddress" required class="form-control" placeholder="Email address" ng-model="sampleEmailAddress" />
+					<button class="btn btn-default" ng-click="sendSampleMail()" ng-disabled="sampleEmailForm.sampleEmailAddress.$valid === false">Send sample email</button>
+					</form>
+				</div>
 				<ul>
 					<li ng-repeat="message in messages">
 						{{message.subject}} - {{message.receivedDateTime}}
@@ -57,6 +62,10 @@
 				<h3 class="panel-title" ng-click="drive = null">Files</h3>
 			</div>
 			<div class="panel-body">
+				<div class="form-group form-inline">
+					<input type="text" class="form-control" placeholder="Folder name" ng-model="newFolderName" />
+					<button class="btn btn-default" ng-click="createFolder()">Create Folder</button>
+				</div>
 				<table ng-if="drive.length > 0" class="table-condensed table-bordered table-hover">
 					<tr>
 						<td>File/Folder</td>
@@ -64,7 +73,19 @@
 						<td>Modified By</td>
 					</tr>
 					<tr ng-repeat="child in drive">
-						<td><a href="{{child.webUrl}}?web=1" target="_blank">{{child.name}}</a> <span class="badge" ng-if="child.folder != null">{{child.folder.childCount}} items</span></td>
+						<td>
+							<a href="{{child.webUrl}}?web=1" target="_blank">{{child.name}}</a>
+							<span class="badge" ng-if="child.folder != null">{{child.folder.childCount}} items</span>
+							<div class="btn-group" role="group" style="float:right">
+								<button class="btn btn-default btn-xs" title="Delete this item" ng-click="deleteOneDriveItem(child.id)" ng-confirm-click="You are about to delete this item. Continue?">
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>
+								<button class="btn btn-default btn-xs" title="Create sharing link" ng-click="createSharingLink(child)">
+									<span class="glyphicon glyphicon-link"></span>
+								</button>
+							</div>
+							<div ng-if="child.sharingLink != null">Sharing Link: {{child.sharingLink.webUrl}} ({{child.sharingLink.type}})</div>
+						</td>
 						<td class="small-photo">
 							<graph-person-photo person="child.createdBy.user.id"></graph-person-photo><a href="/#/Graph/{{child.createdBy.user.userPrincipalName}}">{{child.createdBy.user.displayName}}</a></td>
 						<td class="small-photo">

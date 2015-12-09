@@ -10,7 +10,7 @@
 	<ul class="list-group">
 		<li class="list-group-item" ng-repeat="req in requestLog">
 			<div>
-				<span class="label" ng-class="{'label-success': req.status === 200, 'label-danger': req.status !== 200}">
+				<span class="label" ng-class="{'label-success': req.status >= 200 && req.status < 300, 'label-danger': req.status >= 300}">
 				{{req.status}} - {{req.statusText}}
 				</span>
 

@@ -36,7 +36,7 @@ var app = angular.module('graphApp', ['ngRoute', 'AdalAngular', 'angularMoment']
                 },
                 $httpProvider
                 );
-        } else {
+        } else { //this is development
             adalProvider.init(
                 {
                     instance: 'https://login.microsoftonline.com/',
