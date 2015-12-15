@@ -129,11 +129,34 @@ angular.module('graphApp')
                                         }
                                 }
 
-                                $scope.deleteOneDriveItem = function (itemId) {
-                                        var url = "https://graph.microsoft.com/v1.0/users/" + $scope.upn + "/drive/items/" + itemId
+                                $scope.createFile = function () {
+                                        var f = document.getElementById("inputFile").files[0];
+                                        var r = new FileReader();
+                                        r.onloadend = function (e) {
+                                                var data = e.target.result;
+                                                var url = "https://graph.microsoft.com/v1.0/users/" + $scope.upn + "/drive/root/children/" + f.name + "/content";
+                                                $http.put(url, data)
+                                                        .then(function successCallback(response) {
+                                                                $scope.drive.push(response.data);
+                                                                document.getElementById("inputFile").value = "";
+                                                        }, function errorCallback(response) {
+                                                                $scope.error = JSON.stringify(response);
+                                                                $scope.loadingMessage = "";
+                                                        })
+                                        }
+                                        r.readAsBinaryString(f);
+                                }
+
+                                $scope.deleteOneDriveItem = function (item) {
+                                        var url = "https://graph.microsoft.com/v1.0/users/" + $scope.upn + "/drive/items/" + item.id
                                         $http.delete(url)
                                                 .then(function successCallback(response) {
-                                                        $scope.showDrive();
+                                                        //$scope.showDrive();
+                                                        // Find and remove item from an array
+                                                        var i = $scope.drive.indexOf(item);
+                                                        if (i != -1) {
+                                                                $scope.drive.splice(i, 1);
+                                                        }
                                                 }, function errorCallback(response) {
                                                         $scope.error = JSON.stringify(response);
                                                         $scope.loadingMessage = ""
@@ -186,12 +209,12 @@ angular.module('graphApp')
                                                 "SaveToSentItems": true
                                         };
                                         $http.post(url, data)
-                                        .then(function successCallback(response) {
-                                                $scope.sampleMailSent = true;
-                                        }, function errorCallback(response) {
-                                                $scope.sampleMailSent = false;
-                                        })
-                                        
+                                                .then(function successCallback(response) {
+                                                        $scope.sampleMailSent = true;
+                                                }, function errorCallback(response) {
+                                                        $scope.sampleMailSent = false;
+                                                })
+
                                 }
 
                         },
