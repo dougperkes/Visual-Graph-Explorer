@@ -1,6 +1,7 @@
 'use strict';
 angular.module('graphApp')
-    .controller('graphCtrl', ['$scope', '$http', '$location', '$route', '$routeParams', 'adalAuthenticationService', function ($scope, $http, $location, $route, $routeParams, adalService) {
+    .controller('graphCtrl', ['$scope', '$http', '$location', '$route', '$routeParams', 'adalAuthenticationService', 
+    function ($scope, $http, $location, $route, $routeParams, adalService) {
         $scope.error = "";
         $scope.loadingMessage = "Loading...";
         $scope.upn = $routeParams.upn;

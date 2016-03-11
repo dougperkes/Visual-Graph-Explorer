@@ -1,6 +1,7 @@
 'use strict';
 angular.module('graphApp')
-.controller('userDataCtrl', ['$scope', 'adalAuthenticationService', function ($scope, adalService) {
+.controller('userDataCtrl', ['$scope', 'adalAuthenticationService', 
+function ($scope, adalService) {
     
     $scope.claims = [];
 

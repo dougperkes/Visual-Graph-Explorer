@@ -111,6 +111,34 @@ angular.module('graphApp')
                                                         $scope.loadingMessage = "";
                                                 });
                                 };
+                                
+                                $scope.showWorkingWith = function() {
+                                        $scope.loadingMessage = "Loading...";
+                                        var url = "https://graph.microsoft.com/beta/users/" + $scope.upn + "/workingWith";
+
+                                        $http.get(url)
+                                                .then(function successCallback(response) {
+                                                        $scope.workingWith = response.data.value;
+                                                        $scope.loadingMessage = "";
+                                                }, function errorCallback(response) {
+                                                        $scope.error = JSON.stringify(response);
+                                                        $scope.loadingMessage = "";
+                                                });
+                                }
+
+                                $scope.showTrendingAround = function() {
+                                        $scope.loadingMessage = "Loading...";
+                                        var url = "https://graph.microsoft.com/beta/users/" + $scope.upn + "/trendingAround";
+
+                                        $http.get(url)
+                                                .then(function successCallback(response) {
+                                                        $scope.trendingAround = response.data.value;
+                                                        $scope.loadingMessage = "";
+                                                }, function errorCallback(response) {
+                                                        $scope.error = JSON.stringify(response);
+                                                        $scope.loadingMessage = "";
+                                                });
+                                }
 
                                 $scope.createFolder = function () {
                                         var folderName = $scope.newFolderName;
@@ -218,7 +246,7 @@ angular.module('graphApp')
                                 }
 
                         },
-                        templateUrl: 'App/Views/graph-person.html',
+                        templateUrl: 'App/Views/graph-person.html?v2.4',
                         controller: function ($scope, $http, $route) {
 
 

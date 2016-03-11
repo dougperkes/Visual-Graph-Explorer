@@ -1,3 +1,4 @@
+Hello World
 <div>
 	<graph-person-photo person="personData.id"></graph-person-photo>
 	<h2>{{personData.displayName}}</h2>
@@ -9,7 +10,9 @@
 	<a href="" ng-click="showDrive()">Files</a> |
 	<a href="" ng-click="showContacts()">Contacts</a> |
 	<a href="" ng-click="showEvents()">Events</a> |
-	<a href="" ng-click="showGroups()">Groups</a>
+	<a href="" ng-click="showGroups()">Groups</a> | 
+    <a href="" ng-click="showWorkingWith()">Working With</a> <span class="label label-info">Beta</span> |
+    <a href="" ng-click="showTrendingAround()">Trending Around</a> <span class="label label-info">Beta</span>
 
 
 	<div class="userDetails">
@@ -39,6 +42,8 @@
 				</ul>
 			</div>
 		</div>
+        
+        
 		<div class="panel  panel-info" ng-show="messages != null">
 			<div class="panel-heading">
 				<h3 class="panel-title" ng-click="messages = null">Messages</h3>
@@ -166,6 +171,37 @@
 					</li>
 				</ul>
 			</div>
+
 		</div>
-	</div>
+        
+        <div class="panel panel-info" ng-show="workingWith != null">
+			<div class="panel-heading">
+				<h3 class="panel-title" ng-click="workingWith = null">Working With</h3>
+			</div>
+			<div class="panel-body">
+
+				<ul class="photoDirectory">
+					<li ng-repeat="user in workingWith">
+                        <graph-person-photo person="user.Email" ng-if="user.Email != null"></graph-person-photo>
+                        <h5 ng-if="user.Email != null"><a href="/#/Graph/{{user.Email}}">{{user.preferredName}}</a></h5>
+                        <h5 ng-if="user.Email == null">{{user.preferredName}} (External User)</h5>
+					</li>
+				</ul>
+			</div>
+        </div>
+        
+        <div class="panel panel-info" ng-show="trendingAround != null">
+			<div class="panel-heading">
+				<h3 class="panel-title" ng-click="trendingAround = null">Trending Around</h3>
+			</div>
+			<div class="panel-body">
+				<ul>
+					<li ng-repeat="trendingItem in trendingAround">
+                        <a target="new" href="{{trendingItem.webUrl}}?web=1">{{trendingItem.name}}</a>
+					</li>
+				</ul>
+			</div>
+        </div>	
+    
+    </div>
 </div>

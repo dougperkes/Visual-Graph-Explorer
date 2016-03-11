@@ -5,6 +5,10 @@
 		<graph-person person="userData"></graph-person>
 	</div>
 </div>
+
+
+
+
 <div class="col-md-4">
 	<h3>Log of REST calls (newest on top)</h3>
 	<ul class="list-group">
@@ -13,6 +17,10 @@
 				<span class="label" ng-class="{'label-success': req.status >= 200 && req.status < 300, 'label-danger': req.status >= 300}">
 				{{req.status}} - {{req.statusText}}
 				</span>
+                
+                <a ng-if="req.status === 403" class="btn btn-warning btn-xs"
+                    title="If you receive an HTTP 403, it likely means you haven't yet consented to updated permissions for this app. Click here to try again.'" 
+                    href="/consent.html">Provide Consent</a>
 
 				<div style="float:right;margin-left:10px">
 					<span class="label label-default" am-time-ago="{{req.completedOn}}"></span>
