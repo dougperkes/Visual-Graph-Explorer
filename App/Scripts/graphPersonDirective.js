@@ -112,13 +112,13 @@ angular.module('graphApp')
                                                 });
                                 };
                                 
-                                $scope.showWorkingWith = function() {
+                                $scope.showPeople = function() {
                                         $scope.loadingMessage = "Loading...";
-                                        var url = "https://graph.microsoft.com/beta/users/" + $scope.upn + "/workingWith";
+                                        var url = "https://graph.microsoft.com/beta/users/" + $scope.upn + "/people";
 
                                         $http.get(url)
                                                 .then(function successCallback(response) {
-                                                        $scope.workingWith = response.data.value;
+                                                        $scope.people = response.data.value;
                                                         $scope.loadingMessage = "";
                                                 }, function errorCallback(response) {
                                                         $scope.error = JSON.stringify(response);
@@ -246,7 +246,7 @@ angular.module('graphApp')
                                 }
 
                         },
-                        templateUrl: 'App/Views/graph-person.html?v2.4',
+                        templateUrl: 'App/Views/graph-person.html?v2.5',
                         controller: function ($scope, $http, $route) {
 
 
